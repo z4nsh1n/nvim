@@ -1,10 +1,4 @@
 return {
-  -- Rust
-  {
-  'mrcjkb/rustaceanvim',
-  version = '^5', -- Recommended
-  lazy = false, -- This plugin is already lazy
-},
   -- nvim-cmp completion
   {'hrsh7th/nvim-cmp',
     dependencies = {
@@ -95,48 +89,71 @@ return {
     dependencies = {'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim'},
     config = function()
       require('mason').setup()
-      require('mason-lspconfig').setup()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local lspconfig = require('lspconfig')
-      -- set borders around signature and hover
-      -- Has to be after 'require("lspconfig")' !!
-      local handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded"}),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded"}),
-      }
-
-      lspconfig.lua_ls.setup({
-      handlers = handlers,
-      capabilities = capabilities,
-
-      settings = {
-        Lua = {
-          workspace = {
-              library = {vim.env.RUNTIME},
-            },
-          diagnostics = {
-            globals = {"vim"}
-            },
-          }
-        }
+      require('mason-lspconfig').setup({
+        ensure_installed = {"rust_analyzer", "lua_ls", "ocamllsp", "clangd", "zls", "marksman", "zk"},
       })
-      --lspconfig.rust_analyzer.setup({
-      --capabilities = capabilities})
-      lspconfig.rust_analyzer.setup({
-        handlers = handlers,
-        settings = {
-          ['rust_analyzer'] = {
-            diagnostics = {
-              enable = false
-            }
-          }
-        },
-      capabilities = capabilities
+      require('mason-lspconfig').setup_handlers({
+        function (servername)
+          require('lspconfig')[servername].setup({
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            on_attach = function(client, bufnr)
+              local opts = {buffer=bufnr, remap=false}
+              vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts, { desc = "LSP Hover"})
+              vim.keymap.set("n", "<leader>ls", function() vim.lsp.buf.workspace_symbol() end, opts, { desc = "LSP Workspace Symbol"})
+              vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.setloclist() end, opts, { desc = "LSP Show Diagnostics"})
+              vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts, { desc = "Next Diagnostic"})
+              vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts, { desc = "Previous Diagnostic"})
+              vim.keymap.set("n", "<leader>lca", function() vim.lsp.buf.code_action() end, opts, { desc = "LSP Code Action"})
+              vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts, { desc = "LSP References"})
+              vim.keymap.set("n", "<leader>ln", function() vim.lsp.buf.rename() end, opts, { desc = "LSP Rename"})
+              vim.keymap.set("i", "<leader>lh", function() vim.lsp.buf.signature_help() end, opts, { desc = "LSP Signature Help"})
+              vim.keymap.set("n", "gd", function () vim.lsp.buf.definition() end, opts, {desc = "LSP Goto definition"})
+            end
+          })
+        end
       })
-
-      lspconfig.zls.setup({
-      handlers = handlers,
-      })
+      -- -- manual setup servers
+      -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      -- local lspconfig = require('lspconfig')
+      -- -- set borders around signature and hover
+      -- -- Has to be after 'require("lspconfig")' !!
+      -- local handlers = {
+      --   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded"}),
+      --   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded"}),
+      -- }
+      --
+      -- lspconfig.lua_ls.setup({
+      -- handlers = handlers,
+      -- capabilities = capabilities,
+      --
+      -- settings = {
+      --   Lua = {
+      --     workspace = {
+      --         library = {vim.env.RUNTIME},
+      --       },
+      --     diagnostics = {
+      --       globals = {"vim"}
+      --       },
+      --     }
+      --   }
+      -- })
+      -- --lspconfig.rust_analyzer.setup({
+      -- --capabilities = capabilities})
+      -- lspconfig.rust_analyzer.setup({
+      --   handlers = handlers,
+      --   settings = {
+      --     ['rust_analyzer'] = {
+      --       diagnostics = {
+      --         enable = false
+      --       }
+      --     }
+      --   },
+      -- capabilities = capabilities
+      -- })
+      --
+      -- lspconfig.zls.setup({
+      -- handlers = handlers,
+      -- })
 
       require('lsp_signature').setup({
       bind = true,
