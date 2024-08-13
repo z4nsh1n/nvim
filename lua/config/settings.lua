@@ -1,4 +1,3 @@
-
 vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
