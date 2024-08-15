@@ -6,23 +6,26 @@ return {
     tag = '0.1.5',
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' } },
+    lazy = false,
 
     config = function()
       require('telescope').setup({
-        mappings = {
-          i = {
-            ["<C-j>"] = require('telescope.actions').move_selection_next,
-            ["<C-k>"] = require('telescope.actions').move_selection_previous,
-            ["<C-u>"] = require('telescope.actions').preview_scrolling_up,
-            ["<C-d>"] = require('telescope.actions').preview_scrolling_down,
-          }
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-j>"] = require('telescope.actions').move_selection_next,
+              ["<C-k>"] = require('telescope.actions').move_selection_previous,
+              ["<C-u>"] = require('telescope.actions').preview_scrolling_up,
+              ["<C-d>"] = require('telescope.actions').preview_scrolling_down,
+            }
+          },
         },
       })
     end,
     keys = {
       { "<leader>tf", "<cmd>Telescope find_files<cr>",  desc = "Telescope find files" },
       { "<leader>tc", "<cmd>Telescope colorscheme<cr>", desc = "Telescope find colorschemes" },
-      { "<leader>tb", "<cmd>Telescope buffers<cr>",     desc = "Telescope find buffers" },
+      { "<leader>b",  "<cmd>Telescope buffers<cr>",     desc = "Telescope find buffers" },
     },
   },
   -- markdown
