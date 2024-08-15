@@ -19,6 +19,7 @@ return {
 
       -- Setup
       cmp.setup({
+        preselect = cmp.PreselectMode.None,
         formatting = {
           format = function(entry, vim_item)
             -- Make menus smaller, remove space
@@ -52,7 +53,7 @@ return {
                 luasnip.expand()
               else
                 cmp.confirm({
-                  select = true,
+                  select = false,
                 })
               end
             else
