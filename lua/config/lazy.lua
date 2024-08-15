@@ -19,5 +19,5 @@ require("lazy").setup({
   spec = {
     { import = "plugins" }, -- create plugin specs in lua/plugins/
   },
-  checker = { enabled = true },
+  checker = { enabled = true, notify=false },
 })
