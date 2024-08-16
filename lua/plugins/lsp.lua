@@ -135,7 +135,7 @@ return {
                 { desc = "LSP Code Action" })
               vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts, { desc = "LSP References" })
               vim.keymap.set("n", "<leader>ln", function() vim.lsp.buf.rename() end, opts, { desc = "LSP Rename" })
-              vim.keymap.set("i", "<leader>lh", function() vim.lsp.buf.signature_help() end, opts,
+              vim.keymap.set("n", "<leader>lh", function() vim.lsp.buf.signature_help() end, opts,
                 { desc = "LSP Signature Help" })
               vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts, { desc = "LSP Goto definition" })
             end
