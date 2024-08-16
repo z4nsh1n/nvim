@@ -127,8 +127,10 @@ return {
                 { desc = "LSP Workspace Symbol" })
               vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.setloclist() end, opts,
                 { desc = "LSP Show Diagnostics" })
-              vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts, { desc = "Next Diagnostic" })
-              vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts, { desc = "Previous Diagnostic" })
+              vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float(0, {border="rounded"}) end, opts,
+                { desc = "LSP Show Diagnostics" })
+              vim.keymap.set("n", "<leader>]", function() vim.diagnostic.goto_next() end, opts, { desc = "Next Diagnostic" })
+              vim.keymap.set("n", "<leader>[", function() vim.diagnostic.goto_prev() end, opts, { desc = "Previous Diagnostic" })
               vim.keymap.set("n", "<leader>lca", function() vim.lsp.buf.code_action() end, opts,
                 { desc = "LSP Code Action" })
               vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts, { desc = "LSP References" })
