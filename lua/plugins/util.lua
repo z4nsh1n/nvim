@@ -1,4 +1,19 @@
 return {
+  -- Oil 
+  { 'stevearc/oil.nvim',
+    dependencies = {'nvim-tree/nvim-web-devicons'},
+    config = function ()
+      require('oil').setup({
+        columns = {'icon'},
+
+        view_options = {
+          show_hidden = true
+        },
+      })
+      vim.keymap.set("n", "<leader>f", "<CMD>Oil<CR>", {desc = "Open Oil"})
+      vim.keymap.set("n", "<leader><CR>", require('oil').toggle_float, {desc = "Open Oil floating"})
+    end
+  },
   -- Telescope
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' },
   {
