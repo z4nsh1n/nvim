@@ -96,6 +96,7 @@ return {
               fallback()
             end
           end, { "i", "s" }),
+          ['<CR>'] = cmp.mapping.confirm({select = false}),
         }),
       })
     end
@@ -107,7 +108,7 @@ return {
     config = function()
       require('mason').setup()
       require('mason-lspconfig').setup({
-        ensure_installed = { "rust_analyzer", "lua_ls", "ocamllsp", "clangd", "zls", "marksman", "zk" },
+        ensure_installed = { "rust_analyzer", "lua_ls", "ocamllsp", "clangd", "zls", "marksman", "zk", "hls" },
       })
       require('mason-lspconfig').setup_handlers({
         -- Setup servers for evert sever Mason has
