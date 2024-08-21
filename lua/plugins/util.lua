@@ -1,4 +1,29 @@
 return {
+  -- maximize 
+  {
+    "declancm/maximize.nvim",
+    config = true
+  },
+  -- neogit next to lazygit?
+  {
+  "NeogitOrg/neogit",
+  dependencies = {
+    "nvim-lua/plenary.nvim",         -- required
+    "sindrets/diffview.nvim",        -- optional - Diff integration
+
+    -- Only one of these is needed, not both.
+    "nvim-telescope/telescope.nvim", -- optional
+    -- "ibhagwan/fzf-lua",              -- optional
+  },
+  config = true
+  },
+  -- indent blank lines
+  {"lukas-reineke/indent-blankline.nvim",
+  main = "ibl",
+  ---@module "ibl",
+  ---@type ibl.config
+  opts = {}
+  },
   -- Oil 
   { 'stevearc/oil.nvim',
     dependencies = {'nvim-tree/nvim-web-devicons'},
